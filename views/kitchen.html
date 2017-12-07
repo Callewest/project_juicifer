@@ -78,28 +78,37 @@
       <h1>{{ uiLabels.stock }}</h1>
       <div class="stock-list">
         <h2>{{ uiLabels.smoothie }}</h2>
-        <ingredient
-          ref="ingredient"
-          type="smoothie"
-          v-for="item in ingredients"
-          v-if="item.vol_smoothie > 0"
-          v-on:increment="addToOrder(item, 'smoothie')"  
-          :item="item" 
-          :lang="lang"
-          :key="item.ingredient_id">
-        </ingredient>
-
+        <button class="accordion">{{ uiLabels.smoothie }}</button>
+        <div class="panel">
+          <p>
+            <ingredient
+              ref="ingredient"
+              type="smoothie"
+              v-for="item in ingredients"
+              v-if="item.vol_smoothie > 0"
+              v-on:increment="addToOrder(item, 'smoothie')"  
+              :item="item" 
+              :lang="lang"
+              :key="item.ingredient_id">
+            </ingredient>
+          </p>    
+        </div>  
         <h2>{{ uiLabels.juice }}</h2>
-        <ingredient
-          ref="ingredient"
-          type="juice"
-          v-for="item in ingredients"
-          v-if="item.vol_juice > 0"
-          v-on:increment="addToOrder(item, 'juice')"
-          :item="item"
-          :lang="lang"
-          :key="item.ingredient_id">
-        </ingredient>
+        <button class="accordion">{{ uiLabels.juice }}</button>
+        <div class="panel">
+          <p>
+            <ingredient
+              ref="ingredient"
+              type="juice"
+              v-for="item in ingredients"
+              v-if="item.vol_juice > 0"
+              v-on:increment="addToOrder(item, 'juice')"
+              :item="item"
+              :lang="lang"
+              :key="item.ingredient_id">
+            </ingredient>
+        </p>
+        </div>
       </div>
     </div>
   </div>
