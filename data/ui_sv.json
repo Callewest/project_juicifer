@@ -12,5 +12,6 @@
   "order" : "Min beställning",
   "language" : "English",
   "cancel" : "Avbryt",
-  "stock" : "Lager"
+  "stock" : "Lager",
+  "ordersWaiting": "Väntande beställningar"
 }

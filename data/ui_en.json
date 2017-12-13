@@ -12,5 +12,6 @@
   "order" : "My order",
   "language" : "Svenska",
   "cancel" : "Cancel",
-  "stock" : "Stock"
+  "stock" : "Stock",
+  "ordersWaiting": "Orders Waiting"
 }

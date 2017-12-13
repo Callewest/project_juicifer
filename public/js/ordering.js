@@ -78,6 +78,7 @@ var vm = new Vue({
       this.type = '';
       this.chosenIngredients = [];
     },
+    //Från fil/instruktion i studentportalen. Behövs kanske inte vara med.
     showSmoothie: function () {
       document.getElementById("smoothie-page").style.display = "block";
       document.getElementById("juice-page").style.display = "none";
