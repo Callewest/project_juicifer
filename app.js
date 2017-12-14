@@ -83,6 +83,9 @@ Data.prototype.initializeData = function (table) {
   stock. If you have time, you should think a bit about whether
   this is the right moment to do this.
 */
+
+/*OBSOBSOBS kolla här .done och jämför med under kitchen.html.*/
+
 Data.prototype.addOrder = function (order) {
   this.orders[order.orderId] = order.order;
   this.orders[order.orderId].done = false;

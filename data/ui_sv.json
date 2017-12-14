@@ -13,5 +13,8 @@
   "language" : "English",
   "cancel" : "Avbryt",
   "stock" : "Lager",
+  "table" : "Tabell",
+  "diagram" : "Diagram",
+  "list" : "Lista",
   "ordersWaiting": "Väntande beställningar"
 }

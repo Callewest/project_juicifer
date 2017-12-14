@@ -1,7 +1,9 @@
 /*jslint es5:true, indent: 2 */
 /*global sharedVueStuff, Vue, socket */
 'use strict';
-
+//Vue.component registrerar en global komponent. 'order-item-to-prepare' är komponenten nedan
+//Komponenter har sin egna isolerade omfattning. Data kan inte refereras direkt från 
+//parent till child. men detta går att göra genom props
 Vue.component('order-item-to-prepare', {
   props: ['uiLabels', 'order', 'orderId', 'lang'],
   template: '<div>\
@@ -64,19 +66,37 @@ var vm = new Vue({
     sendCancel: function (orderid) {
       socket.emit("cancelOrder", orderid);
     },
+
+    showFinishedOrder: function() {
+      document.getElementById("stock-page").style.display = "none";
+      document.getElementById("kitchenVue").style.display = "none";
+      document.getElementById("finishedOrder-page").style.display = "block";
+    },
+
     showStock: function(){
       document.getElementById("stock-page").style.display = "block";
       document.getElementById("kitchenVue").style.display = "none";
+      document.getElementById("finishedOrder-page").style.display = "none";
       getIngredients();
     },
     showOrder: function(){
       document.getElementById("stock-page").style.display = "none";
+      document.getElementById("finishedOrder-page").style.display = "none";
       document.getElementById("kitchenVue").style.display = "block";
+    },
+    showTable: function(){
+      document.getElementById("stock-list").style.display = "none";
+      document.getElementById("kitchenVue").style.display = "none";
+    },
+    showDiagram: function(){
+      document.getElementById("stock-list").style.display = "none";
+      document.getElementById("kitchenVue").style.display = "none";
+    },
+    showList: function(){
+      document.getElementById("stock-list").style.display = "block";
     }
   }
 });
-
-
 
 
 var acc = document.getElementsByClassName("accordion");

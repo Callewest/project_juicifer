@@ -13,5 +13,8 @@
   "language" : "Svenska",
   "cancel" : "Cancel",
   "stock" : "Stock",
+  "table" : "Table",
+  "diagram" : "Char",
+  "list" : "List",
   "ordersWaiting": "Orders Waiting"
 }

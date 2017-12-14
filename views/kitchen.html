@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Juicifers kitchen</title>
   <link rel="stylesheet" href="css/juicifer.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Oswald" />
   <script src="/vue/vue.js" defer></script>
   <script src="/socket.io/socket.io.js" defer></script>
   <script src="js/juicifer-main.js" defer></script>
@@ -12,15 +13,23 @@
 </head>
 <body>
   <div id="orders">
-    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    <button v-on:click="switchLang()" class="button">{{ uiLabels.language }}</button>
+    <div>
+      <button v-on:click="showStock()" class="button">{{ uiLabels.stock }} </button>
+      <button v-on:click="showOrder()" class="button">{{ uiLabels.order }} </button>
+      <button v-on:click="showFinishedOrder()" class="button">{{ uiLabels.ordersFinished }} </button>
+    </div>
     <div id="kitchenVue">
-      <div id="one">
-        <h1>{{ uiLabels.ordersInQueue }}</h1>
+      <h1>{{ uiLabels.ordersInQueue }}</h1>
+      
+      <div class="smoothieQueue">
         <h2>{{ uiLabels.smoothie }}</h2>
-        <div id="smoothieOrder">
+
+        <div class="smoothieQueue-list">
           <order-item-to-prepare
-            v-for="(order, key) in orders"
-            v-if="!order.done && order.type == 'smoothie'"
+            id="orderFrame"
+            v-for="(order, key) in orders"   
+            v-if="!order.done && order.type == 'smoothie'" 
             v-on:done="markDone(key)"
             v-on:cancel="sendCancel(key)"
             :order-id="key"
@@ -28,11 +37,19 @@
             :ui-labels="uiLabels"
             :lang="lang"
             :key="key">
+            <!-- V-FOR: Gör en lista över objekt baserat på en array. V-for direktivet kräver en särskild syntax i form av objekt i objekt  -->
+            <!-- V-IF: Tex: <h1 v-if="ok">Yes</h1> <h1 v-else>No</h1>-->
+            <!-- We can use the V-ON directive to listen to DOM events and run some JavaScript when they’re triggered. -->
+            <!-- OBSOBS kolla V-IF. !order.done här och endast order.done längre ner vid färdiga drycker. Om 
+            man gör någon knapp i finished order måste detta ändras tror jag. -->
           </order-item-to-prepare>
         </div>
+      </div>
+      <div class="juiceQueue">
         <h2>{{ uiLabels.juice }}</h2>
-        <div>
+        <div class="juiceQueue-list">
           <order-item-to-prepare
+            id="orderFrame"
             v-for="(order, key) in orders"
             v-if="!order.done && order.type == 'juice'"
             v-on:done="markDone(key)"
@@ -43,72 +60,51 @@
             :lang="lang"
             :key="key">
           </order-item-to-prepare>
-        </div>
+        </div> 
+      </div>
+    </div>
 
-        <h1>{{ uiLabels.ordersFinished }}</h1>
+
+      
+    <div id="finishedOrder-page">
+      <h1>{{ uiLabels.ordersFinished }}</h1>  
+      <div class="smoothieQueue">
         <h2>{{ uiLabels.smoothie }}</h2>
-        <div>
+        <div class="smoothieQueue-list">
           <order-item
-            v-for="(order, key) in orders"
-            v-if="order.done && order.type == 'smoothie'"
-            :order-id="key"
-            :order="order"
-            :lang="lang"
-            :ui-labels="uiLabels"
-            :key="key">
-          </order-item>
-        </div>
-        <h2>{{ uiLabels.juice }}</h2>
-        <div>
-          <order-item
-            v-for="(order, key) in orders"
-            v-if="order.done && order.type == 'juice'"
-            :order-id="key"
-            :order="order"
-            :lang="lang"
-            :ui-labels="uiLabels"
-            :key="key">
-          </order-item>
-        </div>
-      </div>
-      <div id="two">
-        <h2>{{ uiLabels.ordersWaiting }}</h2>
-          <div id="smoothieOrder">
-            <order-item-to-prepare
-              v-for="(order, key) in orders"
-              v-if="!order.done && order.type == 'smoothie'"
-              v-on:done="markDone(key)"
-              v-on:cancel="sendCancel(key)"
-              :order-id="key"
-              :order="order" 
-              :ui-labels="uiLabels"
-              :lang="lang"
-              :key="key">
-            </order-item-to-prepare>
-          </div>
-      </div>
-      <div id="three">
-        <h1>{{ uiLabels.ordersFinished }}</h1>
-          <div id="smoothieOrder">
-            <order-item
-              v-for="(order, key) in orders"
-              v-if="order.done && order.type == 'smoothie'"
-              :order-id="key"
-              :order="order"
-              :lang="lang"
-              :ui-labels="uiLabels"
-              :key="key">
-            </order-item>
-          </div>
+          id="orderFrame"
+          v-for="(order, key) in orders"
+          v-if="order.done && order.type == 'smoothie'"
+          :order-id="key"
+          :order="order"
+          :lang="lang"
+          :ui-labels="uiLabels"
+          :key="key">
+        </order-item>
       </div>
     </div>
-    <div>
-      <button v-on:click="showStock()">{{ uiLabels.stock }} </button>
-      <button v-on:click="showOrder()">{{ uiLabels.order }} </button>
+    
+    <div class="juiceQueue">
+      <h2>{{ uiLabels.juice }}</h2>
+      <div class="juiceQueue-list">
+        <order-item
+        id="orderFrame"
+        v-for="(order, key) in orders"
+        v-if="order.done && order.type == 'juice'"
+        :order-id="key"
+        :order="order"
+        :lang="lang"
+        :ui-labels="uiLabels"
+        :key="key">
+      </order-item>
     </div>
+  </div>
+</div>
+
+
     <div id="stock-page">
       <h1>{{ uiLabels.stock }}</h1>
-      <div class="stock-list">
+      <div class="stock-list" id="stock-list">
         <h2>{{ uiLabels.smoothie }}</h2>
         <button class="accordion">{{ uiLabels.smoothie }}</button>
         <div class="panel">
@@ -122,11 +118,12 @@
               :item="item" 
               :lang="lang"
               :key="item.ingredient_id">
+              <!-- OBSOBS! Vad gör increment? Inbyggd function? -->
             </ingredient>
           </p>    
         </div>  
         <h2>{{ uiLabels.juice }}</h2>
-        <button class="accordion">{{ uiLabels.juice }}</button>
+        <button class="accordion" >{{ uiLabels.juice }}</button>
         <div class="panel">
           <p>
             <ingredient
@@ -142,7 +139,11 @@
         </p>
         </div>
       </div>
+      <button v-on:click="showTable()" class="button">{{ uiLabels.table }} </button>
+      <button v-on:click="showDiagram()" class="button">{{ uiLabels.diagram }} </button>
+      <button v-on:click="showList()" class="button">{{ uiLabels.list }} </button>
     </div>
+
   </div>
 </body>
 </html>
